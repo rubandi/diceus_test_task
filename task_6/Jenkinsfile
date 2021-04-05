@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Stage 1') {
             steps {
-                sh "python task_3/containers_run.py" 
+                sh "python3 task_3/containers_run.py" 
             }
         }
     }
