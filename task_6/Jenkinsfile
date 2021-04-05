@@ -3,9 +3,10 @@ pipeline {
     stages {
         stage('Stage 1') {
             steps {
-                sh "cd task_6"
-                sh "pip3 install -r requirements.txt"
-                sh "python3 containers_run.py" 
+                dir("task_6"){
+                    sh "pip3 install -r requirements.txt"
+                    sh "python3 containers_run.py"
+                } 
             }
         }
     }
