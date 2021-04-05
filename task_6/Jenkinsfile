@@ -1,6 +1,19 @@
 pipeline {
     agent any 
     stages {
+        stage('pipeline_name') {
+            script {
+                item = Jenkins.instance.getItemByFullName(env.JOB)
+                if(env.JOB != 'task_6') {
+                    item.renameTo("task_6")
+                    item.setDescription("Description for task_6")
+                    item.save()
+                }
+                else {
+                    echo 'Name change not required'
+                }
+            }
+        }
         stage('Stage 1') {
             steps {
                 dir("task_6"){
