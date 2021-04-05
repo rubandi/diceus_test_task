@@ -4,11 +4,9 @@ pipeline {
         stage('pipeline_name') {
             steps {
                 script {
-                    item = Jenkins.instance.getItemByFullName(env.JOB)
-                    if(env.JOB != 'task_6') {
-                        item.renameTo("task_6")
-                        item.setDescription("Description for task_6")
-                        item.save()
+                    if(currentBuild.rawBuild.project.displayName != 'task_6') {
+                        currentBuild.rawBuild.project.description = 'Description for task_6'
+                        currentBuild.rawBuild.project.setDisplayName('task_6')
                     }
                     else {
                         echo 'Name change not required'
