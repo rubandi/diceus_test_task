@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Stage 1') {
             steps {
-                python task_3\containers_run.py 
+                python task_3/containers_run.py 
             }
         }
     }
