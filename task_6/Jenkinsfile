@@ -3,9 +3,9 @@ pipeline {
     stages {
         stage('Stage 1') {
             steps {
-                sh "whoami"
-                sh "pip3 install -r task_3/requirements.txt"
-                sh "python3 task_3/containers_run.py" 
+                sh "cd task_6"
+                sh "pip3 install -r requirements.txt"
+                sh "python3 containers_run.py" 
             }
         }
     }
