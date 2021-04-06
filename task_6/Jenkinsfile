@@ -25,7 +25,7 @@ pipeline {
                 }
             }
         }
-        stage('Stage 1') {
+        stage('run_script') {
             steps {
                 dir("task_6"){
                     sh "pip3 install -r requirements.txt"

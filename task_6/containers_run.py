@@ -2,6 +2,7 @@ import sys
 import docker
 import requests
 import json
+import time
 
 client = docker.from_env()
 
@@ -20,6 +21,7 @@ def run_se_grid(nodes_number=1):
     for i in range(1, nodes_number + 1):
         container_name = "selenium-node-chrome-" + str(i)
         client.containers.run("selenium/node-chrome:89.0", detach=True, name=container_name, environment=["SE_EVENT_BUS_HOST=selenium-hub", "SE_EVENT_BUS_PUBLISH_PORT=4442", "SE_EVENT_BUS_SUBSCRIBE_PORT=4443"], volumes={'/dev/shm': {'bind': '/dev/shm', 'mode': 'rw'}}, network=GRID_NET)
+    time.sleep(10)
 
 def remove_se_grid():
     for container in client.containers.list(filters={'name': "selenium"}):
@@ -27,10 +29,14 @@ def remove_se_grid():
         container.remove()
 
 def grid_status():
-    response = json.loads(requests.get("http://localhost:4444/wd/hub/status").text)
-    nodes_status = [node['availability'] if node['availability'] == 'UP' else 'DOWN' for node in response['value']['nodes']]
+    response = requests.get("http://localhost:4444/wd/hub/status")
+    if response.status_code != 200:
+        return False
+        
+    response_json = json.loads(response.text)
+    nodes_status = [node['availability'] if node['availability'] == 'UP' else 'DOWN' for node in response_json['value']['nodes']]
 
-    if response['value']['ready'] != True or 'DOWN' in nodes_status:
+    if response_json['value']['ready'] != True or 'DOWN' in nodes_status:
         return False
     else:
         return True
