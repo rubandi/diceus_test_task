@@ -14,7 +14,7 @@ if GRID_NET not in [net.name for net in client.networks.list()]:
 
 def run_tests():
     client.images.build(path = "./", tag = "tests")
-    host_report_path = os.getcwd() = '/report'
+    host_report_path = os.getcwd() + '/report'
     container_logs = client.containers.run("tests", volumes={host_report_path: {'bind': '/app/report', 'mode': 'rw'}},network=GRID_NET)
     print(str(container_logs, "utf-8"))
 
