@@ -36,7 +36,7 @@ pipeline {
         stage('upload_report') {
             steps {
                 dir("task_6"){
-                    sh "curl -F ‘data=@report/pytest_report.html’ https://webhook.site/4db03449-a644-43ea-a21b-33bd975a3cee"
+                    sh "curl -F 'data=@report/pytest_report.html' https://webhook.site/4db03449-a644-43ea-a21b-33bd975a3cee"
                 }
             }
         }
