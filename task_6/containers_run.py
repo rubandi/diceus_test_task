@@ -13,7 +13,7 @@ if GRID_NET not in [net.name for net in client.networks.list()]:
 
 def run_tests():
     client.images.build(path = "./", tag = "tests")
-    container_logs = client.containers.run("tests", network=GRID_NET)
+    container_logs = client.containers.run("tests", volumes={'./report': {'bind': '/app/report', 'mode': 'rw'}},network=GRID_NET)
     print(str(container_logs, "utf-8"))
 
 def run_se_grid(nodes_number=1):
@@ -32,7 +32,7 @@ def grid_status():
     response = requests.get("http://localhost:4444/wd/hub/status")
     if response.status_code != 200:
         return False
-        
+
     response_json = json.loads(response.text)
     nodes_status = [node['availability'] if node['availability'] == 'UP' else 'DOWN' for node in response_json['value']['nodes']]
 

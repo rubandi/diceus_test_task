@@ -5,4 +5,4 @@ WORKDIR /app
 ADD tests/ /app/
 RUN pip install selenium pytest
 
-CMD ["pytest", "test.py"]
+CMD ["pytest", "test.py", "--html=report/pytest_report.html"]
